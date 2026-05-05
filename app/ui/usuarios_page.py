@@ -19,6 +19,13 @@ class UsuariosPage(QWidget):
         layout.addWidget(titulo)
 
         self.table = QTableWidget()
+        
+        columnas = ["ID", "Nombre", "Apellido", "Correo", "Teléfono", "Activo"]
+        self.table.setColumnCount(len(columnas))
+        self.table.setHorizontalHeaderLabels(columnas)
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.table.setEditTriggers(QTableWidget.NoEditTriggers)
+        
         layout.addWidget(self.table)
 
         self.setLayout(layout)
@@ -30,9 +37,7 @@ class UsuariosPage(QWidget):
         if not usuarios:
             usuarios = []
 
-        columnas = ["ID", "Nombre", "Apellido", "Correo", "Teléfono", "Activo"]
-        self.table.setColumnCount(len(columnas))
-        self.table.setHorizontalHeaderLabels(columnas)
+        self.table.setRowCount(0)
         self.table.setRowCount(len(usuarios))
 
         for row, usuario in enumerate(usuarios):
@@ -42,6 +47,3 @@ class UsuariosPage(QWidget):
             self.table.setItem(row, 3, QTableWidgetItem(str(usuario["email"] or "")))
             self.table.setItem(row, 4, QTableWidgetItem(str(usuario["tel"] or "")))
             self.table.setItem(row, 5, QTableWidgetItem("Sí" if usuario["is_active"] else "No"))
-
-        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.table.setEditTriggers(QTableWidget.NoEditTriggers)
